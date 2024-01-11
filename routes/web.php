@@ -74,10 +74,10 @@ Route::put('update-types/{id}', [\App\Http\Controllers\TypeController::class, 'u
 Route::post('delete-types/{id}', [\App\Http\Controllers\TypeController::class, 'destroy_type']);
 
 
-Route::get('volume',[\App\Http\Controllers\VolumeController::class,'index']);
-Route::post('volumes',[\App\Http\Controllers\VolumeController::class,'store']);
-Route::get('fetch-volumes', [\App\Http\Controllers\VolumeController::class, 'fetch_volume']);
-Route::get('edit-volumes/{id}', [\App\Http\Controllers\VolumeController::class, 'edit_volume']);
-Route::put('update-volumes/{id}', [\App\Http\Controllers\VolumeController::class, 'update_volume']);
-Route::post('delete-volumes/{id}', [\App\Http\Controllers\VolumeController::class, 'destroy_volume']);
+Route::get('volume',[\App\Http\Controllers\VolumeController::class,'index'])->name('volumes');
+Route::post('volumes',[\App\Http\Controllers\VolumeController::class,'store'])->name('store_volume');
+Route::get('fetch-volumes', [\App\Http\Controllers\VolumeController::class, 'fetch'])->name('fetch_volume');
+Route::get('edit-volume/{id}', [\App\Http\Controllers\VolumeController::class, 'edit'])->name('edit_volume');
+Route::put('update-volume/{id}', [\App\Http\Controllers\VolumeController::class, 'update'])->name('update_volume');
+Route::post('delete-volume/{id}', [\App\Http\Controllers\VolumeController::class, 'destroy'])->name('destroy_volume');
 

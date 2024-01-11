@@ -11,17 +11,14 @@ class VolumeController extends Controller
     //
     public function index()
     {
-        $volume=Volume::all();
-        return view('erea.index')->with([
-            "volumes" => $volume
-        ]);
+        return view('volume.index');
     }
 
-    public function fetch_volume()
+    public function fetch()
     {
-        $volume = Volume::all();
+        $volumes = Volume::all();
         return response()->json([
-            'volumes'=>$volume,
+            'volumes'=>$volumes,
         ]);
     }
 
@@ -29,8 +26,7 @@ class VolumeController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'wording'=> 'required|max:191',
-
+            'label'=> 'required|max:191',
         ]);
         if($validator->fails())
         {
@@ -42,37 +38,37 @@ class VolumeController extends Controller
         else
         {
             $volume = new Volume;
-            $volume->wording = $request->input('wording');
+            $volume->label = $request->input('label');
             $volume->save();
             return response()->json([
                 'status'=>200,
-                'message'=>'Succès.'
+                'message'=>'Volume ajouté avec succès.'
             ]);
         }
     }
-    public function edit_volume($id)
+    public function edit($id)
     {
         $volume = Volume::find($id);
         if($volume)
         {
             return response()->json([
                 'status'=>200,
-                'volumes'=> $volume,
+                'volume'=> $volume,
             ]);
         }
         else
         {
             return response()->json([
                 'status'=>404,
-                'message'=>'volume non trouvé.'
+                'message'=>'Aucun volume trouvé'
             ]);
         }
 
     }
-    public function update_volume(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'wording'=> 'required|max:191',
+            'label'=> 'required|max:191',
         ]);
         if($validator->fails())
         {
@@ -86,24 +82,24 @@ class VolumeController extends Controller
             $volume = Volume::find($id);
             if($volume)
             {
-                $volume->wording = $request->input('wording');
+                $volume->label = $request->input('label');
                 $volume->update();
                 return response()->json([
                     'status'=>200,
-                    'message'=>'Succès.'
+                    'message'=>'Volume mis à jour avec succès'
                 ]);
             }
             else
             {
                 return response()->json([
                     'status'=>404,
-                    'message'=>'volume non trouvé.'
+                    'message'=>'Aucun volume trouvé'
                 ]);
             }
         }
     }
 
-    public function destroy_volume($id)
+    public function destroy($id)
     {
         $volume = Volume::find($id);
         if($volume)
@@ -111,14 +107,14 @@ class VolumeController extends Controller
             $volume->delete();
             return response()->json([
                 'status'=>200,
-                'message'=>'Supprimer.'
+                'message'=>'Volume supprimé'
             ]);
         }
         else
         {
             return response()->json([
                 'status'=>404,
-                'message'=>'volume non trouvée.'
+                'message'=>'Aucun volume trouvé'
             ]);
         }
     }
