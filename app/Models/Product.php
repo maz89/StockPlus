@@ -10,8 +10,17 @@ class Product extends Model
     use HasFactory;
     protected $table = 'products';
     protected $fillable = [
-        'wording',
+        'description',
         'type_id',
         'volume_id',
     ];
+    public function type()
+    {
+        return $this->belongsTo(Type::class, 'type_id');
+    }
+
+    public function volume()
+    {
+        return $this->belongsTo(Volume::class,'volume_id');
+    }
 }

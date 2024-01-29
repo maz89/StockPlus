@@ -1,6 +1,17 @@
 @extends('layout.app')
 
-@section('content')
+@section('title')
+    Businesses
+@endsection
+
+
+@section('css')
+
+
+
+@endsection
+
+@section('main')
     <div class="page-content">
         <div class="container-fluid">
 
@@ -161,3 +172,22 @@
     </div>
     <!-- End Page-content -->
 @endsection
+
+
+
+@section('js')
+
+
+
+    <!-- Sweet Alerts js -->
+    <script src="{{asset('assets/libs/sweetalert2/sweetalert2.min.js')}}"></script>
+
+
+@endsection
+
+
+
+
+
+
+

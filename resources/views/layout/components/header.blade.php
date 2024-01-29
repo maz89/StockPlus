@@ -6,10 +6,10 @@
                 <div class="navbar-brand-box horizontal-logo">
                     <a href="index.html" class="logo logo-dark">
                         <span class="logo-sm">
-                            <img src="assets/images/logo.png" alt="" height="">
+                            <img src="assets/images/logo.png" alt="" height="17">
                         </span>
                         <span class="logo-lg">
-                            <img src="assets/images/logo.png" alt="" height="">
+                            <img src="assets/images/logo.png" alt="" height="70">
                         </span>
                     </a>
 

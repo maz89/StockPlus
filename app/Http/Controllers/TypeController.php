@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TypeController extends Controller
 {
@@ -28,7 +29,7 @@ class TypeController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'wording'=> 'required|max:191',
+            'description'=> 'required|max:191',
 
         ]);
         if($validator->fails())
@@ -41,64 +42,12 @@ class TypeController extends Controller
         else
         {
             $type = new Type;
-            $type->wording = $request->input('wording');
+            $type->description = $request->input('description');
             $type->save();
             return response()->json([
                 'status'=>200,
                 'message'=>'Succès.'
             ]);
-        }
-    }
-    public function edit($id)
-    {
-        $type = Type::find($id);
-        if($type)
-        {
-            return response()->json([
-                'status'=>200,
-                'types'=> $type,
-            ]);
-        }
-        else
-        {
-            return response()->json([
-                'status'=>404,
-                'message'=>'Type non trouvé.'
-            ]);
-        }
-
-    }
-    public function update(Request $request, $id)
-    {
-        $validator = Validator::make($request->all(), [
-            'wording'=> 'required|max:191',
-        ]);
-        if($validator->fails())
-        {
-            return response()->json([
-                'status'=>400,
-                'errors'=>$validator->messages()
-            ]);
-        }
-        else
-        {
-            $type = Type::find($id);
-            if($type)
-            {
-                $type->wording = $request->input('wording');
-                $type->update();
-                return response()->json([
-                    'status'=>200,
-                    'message'=>'Succès.'
-                ]);
-            }
-            else
-            {
-                return response()->json([
-                    'status'=>404,
-                    'message'=>'Type non trouvé.'
-                ]);
-            }
         }
     }
 
@@ -110,14 +59,14 @@ class TypeController extends Controller
             $type->delete();
             return response()->json([
                 'status'=>200,
-                'message'=>'Supprimer.'
+                'message'=>'Supprimé.'
             ]);
         }
         else
         {
             return response()->json([
                 'status'=>404,
-                'message'=>'Type non trouvée.'
+                'message'=>'Type de produit non trouvé.'
             ]);
         }
     }

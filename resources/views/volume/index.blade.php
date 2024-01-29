@@ -1,6 +1,31 @@
 @extends('layout.app')
 
-@section('content')
+@section('title')
+    volumes
+@endsection
+
+
+@section('css')
+
+    <!--datatable css-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css"/>
+    <!--datatable responsive css-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css"/>
+
+
+    <!-- Sweet Alert css-->
+    <link href="{{asset('assets/libs/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css"/>
+
+@endsection
+
+
+@section('main')
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+
+
     <div class="page-content">
         <div class="container-fluid">
 
@@ -8,12 +33,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Volumes</h4>
+                        <h4 class="mb-sm-0">Datatables</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">STOCKPLUS</a></li>
-                                <li class="breadcrumb-item active">Volumes</li>
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
+                                <li class="breadcrumb-item active">Datatables</li>
                             </ol>
                         </div>
 
@@ -21,129 +46,264 @@
                 </div>
             </div>
             <!-- end page title -->
-
             <div class="row">
                 <div class="col-lg-12">
+
+                    <div id="success_message"></div>
+
                     <div class="card">
                         <div class="card-header">
-                            <div class="d-flex align-items-center flex-wrap gap-2">
-                                <div class="flex-grow-1">
-                                    <button class="btn btn-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-add-fill me-1 align-bottom"></i> Ajouter</button>
-                                </div>
-                            </div>
+                            <h5 class="card-title mb-0">Basic Datatables</h5>
                         </div>
-                    </div>
-                </div>
-                <!--end col-->
-                <div class="col-xxl-9">
-                    <div class="card" id="contactList">
+                        <div class="card-header">
+                            <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal"
+                                    id="create-btn" data-bs-target="#showModal"><i
+                                    class="ri-add-line align-bottom me-1"></i> Ajouter
+                            </button>
+                        </div>
                         <div class="card-body">
-                            <div>
-                                <div class="table-responsive table-card mb-3">
-                                    <table class="table align-middle table-nowrap mb-0" id="customerTable">
-                                        <thead class="table-light">
-                                        <tr>
-                                            <th scope="col" style="width: 50px;">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="checkAll" value="option">
-                                                </div>
-                                            </th>
-                                            <th class="sort" data-sort="name" scope="col">Name</th>
-                                            <th class="sort" data-sort="company_name" scope="col">Company</th>
-                                            <th class="sort" data-sort="email_id" scope="col">Email ID</th>
-                                            <th class="sort" data-sort="phone" scope="col">Phone No</th>
-                                            <th class="sort" data-sort="lead_score" scope="col">Lead Score</th>
-                                            <th class="sort" data-sort="tags" scope="col">Tags</th>
-                                            <th class="sort" data-sort="date" scope="col">Last Contacted</th>
-                                            <th scope="col">Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody class="list form-check-all">
-                                        <tr>
-                                            <th scope="row">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="chk_child" value="option1">
-                                                </div>
-                                            </th>
-                                            <td class="id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary">#VZ001</a></td>
-                                            <td class="name">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="flex-shrink-0"><img src="assets/images/users/avatar-10.jpg" alt="" class="avatar-xs rounded-circle"></div>
-                                                    <div class="flex-grow-1 ms-2 name">Tonya Noble</div>
-                                                </div>
-                                            </td>
-                                            <td class="company_name">Nesta Technologies</td>
-                                            <td class="email_id">tonyanoble@velzon.com</td>
-                                            <td class="phone">414-453-5725</td>
-                                            <td class="lead_score">154</td>
-                                            <td class="tags">
-                                                <span class="badge bg-primary-subtle text-primary">Lead</span>
-                                                <span class="badge bg-primary-subtle text-primary">Partner</span>
-                                            </td>
-                                            <td class="date">15 Dec, 2021 <small class="text-muted">08:58AM</small></td>
-                                            <td>
-                                                <ul class="list-inline hstack gap-2 mb-0">
-                                                    <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Call">
-                                                        <a href="javascript:void(0);" class="text-muted d-inline-block">
-                                                            <i class="ri-phone-line fs-16"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li class="list-inline-item edit" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Message">
-                                                        <a href="javascript:void(0);" class="text-muted d-inline-block">
-                                                            <i class="ri-question-answer-line fs-16"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <div class="dropdown">
-                                                            <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                <i class="ri-more-fill align-middle"></i>
-                                                            </button>
-                                                            <ul class="dropdown-menu dropdown-menu-end">
-                                                                <li><a class="dropdown-item view-item-btn" href="javascript:void(0);"><i class="ri-eye-fill align-bottom me-2 text-muted"></i>View</a></li>
-                                                                <li><a class="dropdown-item edit-item-btn" href="#showModal" data-bs-toggle="modal"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>
-                                                                <li><a class="dropdown-item remove-item-btn" data-bs-toggle="modal" href="#deleteRecordModal"><i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="noresult" style="display: none">
-                                        <div class="text-center">
-                                            <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width:75px;height:75px"></lord-icon>
-                                            <h5 class="mt-2">Sorry! No Result Found</h5>
-                                            <p class="text-muted mb-0">We've searched more than 150+ contacts We did not find any contacts for you search.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-end mt-3">
-                                    <div class="pagination-wrap hstack gap-2">
-                                        <a class="page-item pagination-prev disabled" href="#">
-                                            Previous
-                                        </a>
-                                        <ul class="pagination listjs-pagination mb-0"></ul>
-                                        <a class="page-item pagination-next" href="#">
-                                            Next
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            @include('volume.modal')
+                            <table id="example"
+                                   class="table table-bordered dt-responsive nowrap table-striped align-middle"
+                                   style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>description</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
 
+                                <tbody>
+                                @php
+                                    $i=1;
+                                @endphp
+                                @foreach( $volumes as $volume )
+                                    <tr>
+                                        <td data-id="{{$volume->id}}">{{$i++}}</td>
+                                        <td>  {{$volume->description}}</td>
+                                        <td>
+                                            <ul class="list-inline hstack gap-2 mb-0">
+                                               {{-- <li class="list-inline-item edit" data-bs-toggle="tooltip"
+                                                    data-bs-trigger="hover" data-bs-placement="top" libelle="Modifier">
+                                                    <a href="" data-bs-toggle="modal"
+                                                       class="text-primary d-inline-block edit-item-btn">
+                                                        <i class="ri-pencil-fill fs-16"></i>
+                                                    </a>
+                                                </li>--}}
+                                                <li class="list-inline-item" data-bs-toggle="tooltip"
+                                                    data-bs-trigger="hover" data-bs-placement="top" libelle="Supprimer">
+                                                    <a class="text-danger d-inline-block remove-item-btn deletebtn"
+                                                       data-bs-toggle="modal" href="">
+                                                        <i class="ri-delete-bin-5-fill fs-16"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
                         </div>
+                        @include('volume.modal')
+                        @include('volume.editmodal')
                     </div>
-                    <!--end card-->
                 </div>
-                <!--end col-->
-
-
             </div>
-            <!--end row-->
 
         </div>
         <!-- container-fluid -->
     </div>
     <!-- End Page-content -->
+
+
+    <!-- end main content-->
+
 @endsection
+
+@section('js')
+
+    <script src="https://code.jquery.com/jquery-3.6.1.slim.min.js"
+            integrity="sha256-w8CvhFs7iHNVUtnSP0YKEg00p9Ih13rlL9zGqvLdePA=" crossorigin="anonymous"></script>
+    <!--datatable js-->
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+            integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+            crossorigin="anonymous"></script>
+
+    <script src="{{asset('assets/js/pages/datatables.init.js')}}"></script>
+    <!-- Sweet Alerts js -->
+    <script src="{{asset('assets/libs/sweetalert2/sweetalert2.min.js')}}"></script>
+    <script>
+        $(document).ready(function () {
+
+            $(document).on('click', '.save', function (e) {
+                e.preventDefault();
+                var data = {
+                    'description': $('.description').val(),
+                }
+                //console.log(data);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: "POST",
+                    url: "/volumes",
+                    data: data,
+                    dataType: "json",
+                    success: function (response) {
+                        //console.log(response);
+                        if (response.status == 400) {
+                            //console.log(response.errors.description);
+                            $('#save_msgList').html("");
+                            $('#save_msgList').addClass('alert alert-danger');
+                            $.each(response.errors, function (key, err_value) {
+                                $('#save_msgList').append('<li>' + err_value + '</li>');
+                            });
+                        }
+                        else {
+                            $('#showModal').modal('toggle');
+                            $('#showModal').find('input').val('');
+                            Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Ajouté avec succès ',
+                                    showConfirmButton: false,
+                                },
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 2000)
+                            );
+                        }
+                    }
+                });
+            });
+
+            $(document).on('click', '.edit', function (e) {
+                e.preventDefault();
+                let currentRow = $(this).closest("tr");
+                let volume_id = parseInt(currentRow.find("td:eq(0)").attr('data-id'));
+                //console.log(volume_id);
+                $.ajax({
+                    type: "GET",
+                    url: "/edit-volume/" + volume_id,
+                    success: function (response) {
+                        //console.log(response.volumes.description);
+                        $('#volume_id').val(response.volumes.id);
+                        $('#description').val(response.volumes.description);
+
+                        $('#showEditModal').modal('toggle');
+                    }
+                });
+            });
+
+            $(document).on('click', '.update', function (e) {
+                e.preventDefault();
+                $(this).text('Updating..');
+                var id = $('#volume_id').val();
+                //console.log(id);
+                var data = {
+                    'description': $('#description').val(),
+                }
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    type: "PUT",
+                    url: "/update-volume/" + id,
+                    data: data,
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response.volumes.description);
+                        /*
+                        if (response.status == 400) {
+                            $('#update_msgList').html("");
+                            $('#update_msgList').addClass('alert alert-danger');
+                            $.each(response.errors, function (key, err_value) {
+                                $('#update_msgList').append('<li>' + err_value + '</li>');
+                            });
+                            $('.update_volume').text('Update');
+                        } else {
+                            $('#update_msgList').html("");
+                            $('#showEditModal').find('input').val('');
+                            Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Modifié',
+                                    showConfirmButton: false,
+                                },
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 2000)
+                            );
+                        }*/
+                    }
+                });
+
+            });
+
+            $(document).on('click', '.deletebtn', function (e) {
+                e.preventDefault();
+                let currentRow = $(this).closest("tr");
+
+                let id = parseInt(currentRow.find("td:eq(0)").attr('data-id'));
+                //alert(id);
+
+                Swal.fire({
+                    title: "Do you want to delete this  Volume?  ",
+                    icon: 'question',
+                    text: "",
+                    type: "warning",
+                    showCancelButton: !0,
+                    confirmButtonText: "Oui, Supprimer",
+                    cancelButtonText: "Cancel",
+                    reverseButtons: !0
+                }).then(function (e) {
+                    if (e.value === true) {
+                        //alert(id);
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            type: 'POST',
+                            url: "/delete-volume/" + id,
+                            dataType: 'JSON',
+                            success: function (response) {
+                                //console.log(response);
+                                if (response.status == 200) {
+                                    Swal.fire("success", response.message, "success");
+                                    // refresh page after 2 seconds
+                                    setTimeout(function () {
+                                        location.reload();
+                                    }, 2000);
+                                } else {
+                                    Swal.fire("error!", response.message, "error");
+                                }
+                            }
+                        });
+                    } else {
+                        e.dismiss;
+                    }
+                }, function (dismiss) {
+                    return false;
+                })
+            });
+
+        });
+
+    </script>
+
+@endsection
+
+
+
+
+
+
+

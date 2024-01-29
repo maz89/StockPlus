@@ -33,7 +33,7 @@
             <ul class="navbar-nav" id="navbar-nav">
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{route('welcome')}}">
+                    <a class="nav-link menu-link" href="#">
                         <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Tableau de bord</span>
                     </a>
                 </li>
@@ -41,7 +41,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarPages" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarPages">
-                        <i class="ri-pages-line"></i> <span data-key="t-pages">Configuration</span>
+                        <i class="ri-settings-2-line"></i> <span data-key="t-pages">Configuration</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarPages">
                         <ul class="nav nav-sm flex-column">
@@ -49,45 +49,29 @@
                                 <a href="{{route('volumes')}}" class="nav-link" data-key="t-starter"> Volumes</a>
                             </li>
                             <li class="nav-item">
-                                <a href="pages-team.html" class="nav-link" data-key="t-team"> Team </a>
+                                <a href="{{route('types')}}" class="nav-link" data-key="t-team">Types de produit</a>
                             </li>
                             <li class="nav-item">
-                                <a href="pages-timeline.html" class="nav-link" data-key="t-timeline"> Timeline </a>
+                                <a href="#" class="nav-link" data-key="t-timeline">Zones</a>
                             </li>
                             <li class="nav-item">
-                                <a href="pages-faqs.html" class="nav-link" data-key="t-faqs"> FAQs </a>
+                                <a href="#" class="nav-link" data-key="t-faqs">Propriétaires</a>
                             </li>
                             <li class="nav-item">
-                                <a href="pages-pricing.html" class="nav-link" data-key="t-pricing"> Pricing </a>
+                                <a href="#" class="nav-link" data-key="t-pricing"> Distributeurs </a>
                             </li>
                             <li class="nav-item">
-                                <a href="pages-gallery.html" class="nav-link" data-key="t-gallery"> Gallery </a>
+                                <a href="#" class="nav-link" data-key="t-gallery">Commercials</a>
                             </li>
                             <li class="nav-item">
-                                <a href="pages-maintenance.html" class="nav-link" data-key="t-maintenance"> Maintenance
-                                </a>
+                                <a href="#" class="nav-link" data-key="t-maintenance"> Produits</a>
                             </li>
-                            <li class="nav-item">
-                                <a href="pages-coming-soon.html" class="nav-link" data-key="t-coming-soon"> Coming Soon
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages-sitemap.html" class="nav-link" data-key="t-sitemap"> Sitemap </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages-search-results.html" class="nav-link" data-key="t-search-results"> Search Results </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages-privacy-policy.html" class="nav-link" data-key="t-privacy-policy">Privacy Policy</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages-term-conditions.html" class="nav-link" data-key="t-term-conditions">Term & Conditions</a>
-                            </li>
+
                         </ul>
                     </div>
                 </li>
 
-                <li class="nav-item">
+               {{-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarLanding" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLanding">
                         <i class="ri-rocket-line"></i> <span data-key="t-landing">Landing</span>
                     </a>
@@ -104,7 +88,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li>--}}
 
             </ul>
         </div>

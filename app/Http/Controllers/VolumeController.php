@@ -6,19 +6,23 @@ use App\Models\Volume;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+
 class VolumeController extends Controller
 {
     //
     public function index()
     {
-        return view('volume.index');
+        $volumes=Volume::all();
+        return view('volume.index')->with([
+            "volumes" => $volumes
+        ]);
     }
 
-    public function fetch()
+    public function fetchvolume()
     {
-        $volumes = Volume::all();
+        $volume = Volume::all();
         return response()->json([
-            'volumes'=>$volumes,
+            'volumes'=>$volume,
         ]);
     }
 
@@ -26,7 +30,7 @@ class VolumeController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'label'=> 'required|max:191',
+            'description'=> 'required|max:191',
         ]);
         if($validator->fails())
         {
@@ -38,11 +42,11 @@ class VolumeController extends Controller
         else
         {
             $volume = new Volume;
-            $volume->label = $request->input('label');
+            $volume->description = $request->input('description');
             $volume->save();
             return response()->json([
                 'status'=>200,
-                'message'=>'Volume ajouté avec succès.'
+                'message'=>'Volume Added Successfully.'
             ]);
         }
     }
@@ -53,14 +57,14 @@ class VolumeController extends Controller
         {
             return response()->json([
                 'status'=>200,
-                'volume'=> $volume,
+                'volumes'=> $volume,
             ]);
         }
         else
         {
             return response()->json([
                 'status'=>404,
-                'message'=>'Aucun volume trouvé'
+                'message'=>'No Volume Found.'
             ]);
         }
 
@@ -68,7 +72,7 @@ class VolumeController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'label'=> 'required|max:191',
+            'description'=> 'required|max:191',
         ]);
         if($validator->fails())
         {
@@ -82,18 +86,18 @@ class VolumeController extends Controller
             $volume = Volume::find($id);
             if($volume)
             {
-                $volume->label = $request->input('label');
+                $volume->description = $request->input('description');
                 $volume->update();
                 return response()->json([
                     'status'=>200,
-                    'message'=>'Volume mis à jour avec succès'
+                    'message'=>'Volume Updated Successfully.'
                 ]);
             }
             else
             {
                 return response()->json([
                     'status'=>404,
-                    'message'=>'Aucun volume trouvé'
+                    'message'=>'No Volume Found.'
                 ]);
             }
         }
@@ -107,14 +111,14 @@ class VolumeController extends Controller
             $volume->delete();
             return response()->json([
                 'status'=>200,
-                'message'=>'Volume supprimé'
+                'message'=>'Volume Deleted Successfully.'
             ]);
         }
         else
         {
             return response()->json([
                 'status'=>404,
-                'message'=>'Aucun volume trouvé'
+                'message'=>'No Volume Found.'
             ]);
         }
     }

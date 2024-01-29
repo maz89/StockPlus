@@ -1,1 +1,5 @@
-@yield('content')
+
+@yield('main')
+
+
+

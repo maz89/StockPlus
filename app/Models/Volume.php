@@ -10,7 +10,6 @@ class Volume extends Model
     use HasFactory;
     protected $table = 'volumes';
     protected $fillable = [
-        'label',
-
+        'description',
     ];
 }

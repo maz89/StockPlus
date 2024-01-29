@@ -1,12 +1,13 @@
 @extends('layout.app')
 
 @section('title')
-    Businesses
+    Types
 @endsection
 
 
 @section('css')
 
+    <!--datatable css-->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css"/>
     <!--datatable responsive css-->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.css"/>
@@ -56,7 +57,7 @@
                         </div>
                         <div class="card-header">
                             <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal"
-                                    id="create-btn" data-bs-target="#add_ajouter"><i
+                                    id="create-btn" data-bs-target="#showModal"><i
                                     class="ri-add-line align-bottom me-1"></i> Ajouter
                             </button>
                         </div>
@@ -67,7 +68,7 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
+                                    <th>description</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -79,16 +80,16 @@
                                 @foreach( $types as $type )
                                     <tr>
                                         <td data-id="{{$type->id}}">{{$i++}}</td>
-                                        <td>  {{ $type->wording }}</td>
+                                        <td>  {{$type->description}}</td>
                                         <td>
                                             <ul class="list-inline hstack gap-2 mb-0">
-                                                <li class="list-inline-item editbtn" data-bs-toggle="tooltip"
+                                               {{-- <li class="list-inline-item edit" data-bs-toggle="tooltip"
                                                     data-bs-trigger="hover" data-bs-placement="top" libelle="Modifier">
                                                     <a href="" data-bs-toggle="modal"
-                                                       class="text-primary d-inline-block edit-item-btn modifierType ">
+                                                       class="text-primary d-inline-block edit-item-btn">
                                                         <i class="ri-pencil-fill fs-16"></i>
                                                     </a>
-                                                </li>
+                                                </li>--}}
                                                 <li class="list-inline-item" data-bs-toggle="tooltip"
                                                     data-bs-trigger="hover" data-bs-placement="top" libelle="Supprimer">
                                                     <a class="text-danger d-inline-block remove-item-btn deletebtn"
@@ -131,34 +132,13 @@
     <script src="{{asset('assets/js/pages/datatables.init.js')}}"></script>
     <!-- Sweet Alerts js -->
     <script src="{{asset('assets/libs/sweetalert2/sweetalert2.min.js')}}"></script>
-
-
     <script>
         $(document).ready(function () {
-            $(document).on('click', '.editbtn', function (e) {
-                e.preventDefault();
-                let currentRow = $(this).closest("tr");
-                let business_id = parseInt(currentRow.find("td:eq(0)").attr('data-id'));
-                //console.log(business_id);
-                $.ajax({
-                    type: "GET",
-                    url: "/edit-types/" + type_id,
-                    success: function (response) {
-                        //console.log(response.businesses.name);
-                        $('#myModalLabel').text('Modifier type');
-                        $('#wording').val(response.businesses.wording);
-                        $('#type_id').val(response.type.id);
-                        $(".add_type").hide();
-                        $(".update_type").show();
-                        $('#add_type').modal('toggle');
-                    }
-                });
-            });
 
-            $(document).on('click', '.add_type', function (e) {
+            $(document).on('click', '.save', function (e) {
                 e.preventDefault();
                 var data = {
-                    'wording': $('.wording').val(),
+                    'description': $('.description').val(),
                 }
                 //console.log(data);
                 $.ajaxSetup({
@@ -166,22 +146,25 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
+
                 $.ajax({
                     type: "POST",
                     url: "/types",
                     data: data,
                     dataType: "json",
                     success: function (response) {
-                        // console.log(response);
+                        console.log(response);
                         if (response.status == 400) {
+                            //console.log(response.errors.description);
                             $('#save_msgList').html("");
                             $('#save_msgList').addClass('alert alert-danger');
                             $.each(response.errors, function (key, err_value) {
                                 $('#save_msgList').append('<li>' + err_value + '</li>');
                             });
-                        } else {
-                            $('#add_type').modal('toggle');
-                            $('#add_type').find('input').val('');
+                        }
+                        else {
+                            $('#showModal').modal('toggle');
+                            $('#showModal').find('input').val('');
                             Swal.fire({
                                     position: 'top-end',
                                     icon: 'success',
@@ -197,54 +180,6 @@
                 });
             });
 
-            $(document).on('click', '.update_business', function (e) {
-                e.preventDefault();
-                $(this).text('modification..');
-                var id = $('#type_id').val();
-                //console.log(id);
-                var data = {
-                    'wording': $('#wording').val(),
-                }
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    type: "PUT",
-                    url: "/update-type/" + id,
-                    data: data,
-                    dataType: "json",
-                    success: function (response) {
-                        console.log(response);
-                        if (response.status == 400) {
-                            $('#update_msgList').html("");
-                            $('#update_msgList').addClass('alert alert-danger');
-                            $.each(response.errors, function (key, err_value) {
-                                $('#update_msgList').append('<li>' + err_value + '</li>');
-                            });
-                            $('.update_type').text('Modifier');
-                        } else {
-                            $('#update_msgList').html("");
-                            $('#add_type').find('input').val('');
-                            Swal.fire({
-                                    position: 'top-end',
-                                    icon: 'success',
-                                    title: 'Modifié avec succès',
-                                    showConfirmButton: false,
-
-                                },
-                                setTimeout(function () {
-                                    location.reload();
-                                }, 2000)
-                            );
-                        }
-                    }
-                });
-
-            });
-
-
             $(document).on('click', '.deletebtn', function (e) {
                 e.preventDefault();
                 let currentRow = $(this).closest("tr");
@@ -253,7 +188,7 @@
                 //alert(id);
 
                 Swal.fire({
-                    title: "êtes vous sûr de vouloir supprimer?  ",
+                    title: "Voulez-vous vraiment supprimer?",
                     icon: 'question',
                     text: "",
                     type: "warning",
@@ -274,7 +209,7 @@
                             url: "/delete-type/" + id,
                             dataType: 'JSON',
                             success: function (response) {
-                                //console.log(response);
+                                console.log(response);
                                 if (response.status == 200) {
                                     Swal.fire("success", response.message, "success");
                                     // refresh page after 2 seconds
@@ -299,3 +234,10 @@
     </script>
 
 @endsection
+
+
+
+
+
+
+
